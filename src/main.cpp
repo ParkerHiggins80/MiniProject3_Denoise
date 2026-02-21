@@ -3,6 +3,12 @@
 #include <vector>
 using namespace std;
 
+int clampVal(int v) {
+    if (v < 0) return 0;
+    if (v > 255) return 255;
+    return v;
+}
+
 vector<vector<int>> meanFilter(const vector<vector<int>>& img, int rows, int cols) 
 {
     vector<vector<int>> out = img;
@@ -18,7 +24,7 @@ vector<vector<int>> meanFilter(const vector<vector<int>>& img, int rows, int col
                     sum += img[i + ni][j + nj]; // Sums the values in the 3x3 neighborhood around (i, j)
                 }
             }
-            out[i][j] = sum / 9;
+            out[i][j] = clampVal(sum / 9); // Clamp result to valid range [0, 255]
         }
     }
     return out;
